@@ -12,7 +12,6 @@ char webpage[] PROGMEM = R"=====(
       }
     }
     function sendBtnPressed(color){
-      console.log(color);
       Socket.send(color);
     }  
   </script>

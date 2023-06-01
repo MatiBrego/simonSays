@@ -124,7 +124,8 @@ void playLevelUpSound() {
 
 
 void gameOver() {
-  printf("Game over! your score: ");
+  String score = (String) (gameIndex - 1);
+  webSocket.broadcastTXT(score);
   gameIndex = 0;
   delay(200);
 
@@ -186,7 +187,6 @@ loop(void)
    playSequence();
    if (!checkUserSequence()) {
       gameOver();
-      webSocket.broadcastTXT("" + gameIndex);
    }
 
    delay(300);
