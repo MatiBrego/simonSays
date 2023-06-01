@@ -3,7 +3,7 @@
  *      Change SSID and PASS for two sites
  */
 
-#if 0                   //  1 for University, 0 for Home
+#if 0                  //  1 for University, 0 for Home
 
 
 /*
@@ -20,8 +20,8 @@
  *  SSID and PASS for Home
  */
 
-#define MY_SSID "Compu 2110"
-#define MY_PASS "andi1969"
+#define MY_SSID "iPhone de Matias (2)"
+#define MY_PASS "matias2110"
 
 #endif
 

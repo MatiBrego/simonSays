@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <WIFI.h>
+#include <WiFi.h>
 #include <WebServer.h>
 #include <WebSocketsServer.h>
 
@@ -186,6 +186,7 @@ loop(void)
    playSequence();
    if (!checkUserSequence()) {
       gameOver();
+      webSocket.broadcastTXT("" + gameIndex);
    }
 
    delay(300);
