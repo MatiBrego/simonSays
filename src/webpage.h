@@ -16,14 +16,21 @@ char webpage[] PROGMEM = R"=====(
     }  
   </script>
 </head>
-<body className="position-relative h-100 w-100 d-flex "onload="javascript:init()">
-<h1 id="score" class=" d-flex justify-content-center mt-3">Score: </h1>
+<body className=""onload="javascript:init()">
+  <h1 id="score" class=" d-flex justify-content-center mt-3">Score: </h1>
   <div class="position-absolute top-50 start-50 translate-middle h-75 w-100 ">
-  
-  <div class="container align-items-center h-50">
-    <div class="row h-100 ">
-        <button type="button" class="col-sm-2 btn btn-danger w-50 fs-1 rounded-4 " id="red" onClick=sendBtnPressed("red");>Red</button>
-        <button type="button" class="col-sm-2  btn btn-primary w-50 fs-1 rounded-4" id="blue" onClick=sendBtnPressed("blue");>Blue</button>
+  <div>
+    
+  </div>
+  <div class="container h-50">
+    <div class="row h-100">
+      <div class="col w-100">
+        <button type="button" class="btn btn-danger w-100  rounded-4 h-100 fs-1 fs-sm-3" id="red" onClick=sendBtnPressed("red");>Red</button>
+        </div>
+        
+        <div class="col w-100">
+        <button type="button" class="col-sm-2  btn btn-primary w-100 fs-1 rounded-4 h-100" id="blue" onClick=sendBtnPressed("blue");>Blue</button>
+        </div>
     </div>
   
   </div>
@@ -32,8 +39,12 @@ char webpage[] PROGMEM = R"=====(
   
   <div class="container align-items-center  h-50">
     <div class="row h-100">
-        <button type="button" class="col-sm-2 btn btn-warning w-50 fs-1 text-white rounded-4" id="yellow" onClick=sendBtnPressed("yellow");>Yellow</button>
-        <button type="button" class="col-sm-2 btn btn-success w-50 fs-1 rounded-4" id="green" onClick=sendBtnPressed("green");>Green</button>
+      <div class="col w-100">
+        <button type="button" class="btn btn-warning w-100 fs-1 h-100 text-white rounded-4" id="yellow" onClick=sendBtnPressed("yellow");>Yellow</button>
+      </div>
+      <div class="col w-100">
+        <button type="button" class="btn btn-success w-100 fs-1 h-100 rounded-4" id="green" onClick=sendBtnPressed("green");>Green</button>
+      </div>
     </div>
   </div>
   </div>
