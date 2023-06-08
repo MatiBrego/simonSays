@@ -20,6 +20,12 @@ const uint8_t buttonPins[] = {22, 16, 32, 27};
 #define NOTE_C4 261.63
 #define NOTE_E4 329.63
 #define NOTE_G5 783.99
+#define NOTE_G4 392.00
+#define NOTE_E5 659.25
+#define NOTE_C5 523.25
+#define NOTE_D5 587.33
+#define NOTE_DS5 622
+#define NOTE_CS5 554
 
 const double gameTones[] = { NOTE_G3, NOTE_C4, NOTE_E4, NOTE_G5};
 
@@ -107,17 +113,17 @@ byte readButtons() {
 }
 
 void playLevelUpSound() {
-//   tone(SPEAKER_PIN, NOTE_E4);
-//   delay(150);
-//   tone(SPEAKER_PIN, NOTE_G4);
-//   delay(150);
-//   tone(SPEAKER_PIN, NOTE_E5);
-//   delay(150);
-//   tone(SPEAKER_PIN, NOTE_C5);
-//   delay(150);
-//   tone(SPEAKER_PIN, NOTE_D5);
-//   delay(150);
-//   tone(SPEAKER_PIN, NOTE_G5);
+  tone(SPEAKER_PIN, NOTE_E4);
+  delay(150);
+  tone(SPEAKER_PIN, NOTE_G4);
+  delay(150);
+  tone(SPEAKER_PIN, NOTE_E5);
+  delay(150);
+  tone(SPEAKER_PIN, NOTE_C5);
+  delay(150);
+  tone(SPEAKER_PIN, NOTE_D5);
+  delay(150);
+  tone(SPEAKER_PIN, NOTE_G5);
   delay(150);
   noTone(SPEAKER_PIN);
 }
@@ -130,18 +136,14 @@ void gameOver() {
   delay(200);
 
   // Play a Wah-Wah-Wah-Wah sound
-//   tone(SPEAKER_PIN, NOTE_DS5);
+  tone(SPEAKER_PIN, NOTE_DS5);
   delay(300);
-//   tone(SPEAKER_PIN, NOTE_D5);
+  tone(SPEAKER_PIN, NOTE_D5);
   delay(300);
-//   tone(SPEAKER_PIN, NOTE_CS5);
+  tone(SPEAKER_PIN, NOTE_CS5);
   delay(300);
-  for (byte i = 0; i < 10; i++) {
-    for (int pitch = -10; pitch <= 10; pitch++) {
-      // tone(SPEAKER_PIN, NOTE_C5 + pitch);
-      delay(5);
-    }
-  }
+  tone(SPEAKER_PIN, NOTE_C5);
+  delay(900);
   noTone(SPEAKER_PIN);
 
 //   sendScore(DASH, DASH);
