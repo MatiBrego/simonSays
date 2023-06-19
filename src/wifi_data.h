@@ -20,8 +20,8 @@
  *  SSID and PASS for Home
  */
 
-#define MY_SSID "iPhone de Matias (2)"
-#define MY_PASS "matias2110"
+#define MY_SSID ""
+#define MY_PASS ""
 
 #endif
 

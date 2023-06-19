@@ -9,13 +9,16 @@
 WebServer server;
 WebSocketsServer webSocket = WebSocketsServer(81);
 
+// Define led pins
 const uint8_t ledPins[] = {23, 17, 33, 14};
-const uint8_t buttonPins[] = {22, 16, 32, 27};
 
+// Define speaker pin
 #define SPEAKER_PIN 2
 
+// Define max game length
 #define MAX_GAME_LENGTH 100
 
+// Define note frequencies for speaker
 #define NOTE_G3 196
 #define NOTE_C4 261.63
 #define NOTE_E4 329.63
@@ -27,12 +30,15 @@ const uint8_t buttonPins[] = {22, 16, 32, 27};
 #define NOTE_DS5 622
 #define NOTE_CS5 554
 
+// Declare one tone for each Led
 const double gameTones[] = { NOTE_G3, NOTE_C4, NOTE_E4, NOTE_G5};
 
+// Declare variables to handle the game logic
 uint8_t gameSequence[MAX_GAME_LENGTH] = {0};
 uint8_t gameIndex = 0;
 boolean buttonPressed[] = {false, false, false, false};
 
+// Handle user input from the web socket
 static void
 webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 {
@@ -75,12 +81,12 @@ setup(void)
 
    for (byte i = 0; i < 4; i++) {
       pinMode(ledPins[i], OUTPUT);
-      pinMode(buttonPins[i], INPUT_PULLUP);
     }
     pinMode(SPEAKER_PIN, OUTPUT);
     randomSeed(analogRead(A3));
 }
 
+// Function to light a led and play the corresponding tone
 void lightLedAndPlayTone(byte ledIndex) {
   digitalWrite(ledPins[ledIndex], HIGH);
   tone(SPEAKER_PIN, gameTones[ledIndex]);
@@ -89,6 +95,7 @@ void lightLedAndPlayTone(byte ledIndex) {
   noTone(SPEAKER_PIN);
 }
 
+// Plays the sequence
 void playSequence() {
   for (int i = 0; i < gameIndex; i++) {
     byte currentLed = gameSequence[i];
@@ -97,13 +104,13 @@ void playSequence() {
   }
 }
 
+// Loop that waits for user input through web socket.
 byte readButtons() {
   while (true) {  
     webSocket.loop();
     server.handleClient();
 
     for (byte i = 0; i < 4; i++) {
-      byte buttonPin = buttonPins[i];
       if (buttonPressed[i]) {
         return i;
       }
@@ -112,6 +119,7 @@ byte readButtons() {
   }
 }
 
+// Plays level up music when user input is correct
 void playLevelUpSound() {
   tone(SPEAKER_PIN, NOTE_E4);
   delay(150);
@@ -128,7 +136,7 @@ void playLevelUpSound() {
   noTone(SPEAKER_PIN);
 }
 
-
+// Sends the score to the web socket client, resets the game and plays the game over music
 void gameOver() {
   String score = (String) (gameIndex - 1);
   webSocket.broadcastTXT(score);
@@ -146,11 +154,10 @@ void gameOver() {
   delay(900);
   noTone(SPEAKER_PIN);
 
-//   sendScore(DASH, DASH);
   delay(500);
 }
 
-
+// Waits for user input in from the readButtons() loop and checks it
 bool checkUserSequence() {
 
   for(int j = 0; j < 4 ; j++){
@@ -160,18 +167,24 @@ bool checkUserSequence() {
   for (int i = 0; i < gameIndex; i++) {
     byte expectedButton = gameSequence[i];
     byte actualButton = readButtons();
+
     lightLedAndPlayTone(actualButton);
+    
     if (expectedButton != actualButton) {
+
       for(int j = 0; j < 4 ; j++){
         buttonPressed[j] = false;
       }
+
       return false;
     }
 
     for(int j = 0; j < 4 ; j++){
       buttonPressed[j] = false;
     }
+
   }
+  
   return true;
 }
 
@@ -180,13 +193,16 @@ bool checkUserSequence() {
 void
 loop(void)
 {
+  
    gameSequence[gameIndex] = random(0, 4);
    gameIndex++;
+
    if (gameIndex >= MAX_GAME_LENGTH) {
       gameIndex = MAX_GAME_LENGTH - 1;
    }
 
    playSequence();
+
    if (!checkUserSequence()) {
       gameOver();
    }
