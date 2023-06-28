@@ -171,7 +171,7 @@ bool checkUserSequence() {
 
     lightLedAndPlayTone(actualButton);
 
-    for(int j = 0; j < 4 ; j++){
+    for(int j = 0; j < 4 ; j++){ // Set all buttonPressed to false after reading
       buttonPressed[j] = false;
     }
     
