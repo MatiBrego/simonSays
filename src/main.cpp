@@ -6,11 +6,15 @@
 #include "wifi_ruts.h"
 #include "webpage.h"
 
+
+// Create http server
 WebServer server;
+
+// Create web socket server
 WebSocketsServer webSocket = WebSocketsServer(81);
 
 // Define led pins
-const uint8_t ledPins[] = {23, 17, 33, 14};
+const uint8_t ledPins[] = {23, 17, 33, 14}; // {red, blue, yellow, green}
 
 // Define speaker pin
 #define SPEAKER_PIN 2
@@ -70,14 +74,15 @@ webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
 void
 setup(void)
 {
-   Serial.begin(BAUD);
+    Serial.begin(BAUD);
 
     wifi_connect();
 
-    server.on("/", []() { server.send_P(200, "text/html", webpage); });
+    server.on("/", []() { server.send_P(200, "text/html", webpage); }); // Send webpage on http get request
     server.begin();
+
     webSocket.begin();
-    webSocket.onEvent(webSocketEvent);
+    webSocket.onEvent(webSocketEvent); // Function to handle sockets event
 
    for (byte i = 0; i < 4; i++) {
       pinMode(ledPins[i], OUTPUT);
@@ -139,7 +144,7 @@ void playLevelUpSound() {
 // Sends the score to the web socket client, resets the game and plays the game over music
 void gameOver() {
   String score = (String) (gameIndex - 1);
-  webSocket.broadcastTXT(score);
+  webSocket.broadcastTXT(score); // Send score to client
   gameIndex = 0;
   delay(200);
 
@@ -160,29 +165,20 @@ void gameOver() {
 // Waits for user input in from the readButtons() loop and checks it
 bool checkUserSequence() {
 
-  for(int j = 0; j < 4 ; j++){
-      buttonPressed[j] = false;
-  }
-
   for (int i = 0; i < gameIndex; i++) {
     byte expectedButton = gameSequence[i];
     byte actualButton = readButtons();
 
     lightLedAndPlayTone(actualButton);
-    
-    if (expectedButton != actualButton) {
-
-      for(int j = 0; j < 4 ; j++){
-        buttonPressed[j] = false;
-      }
-
-      return false;
-    }
 
     for(int j = 0; j < 4 ; j++){
       buttonPressed[j] = false;
     }
+    
+    if (expectedButton != actualButton) {
 
+      return false;
+    }
   }
   
   return true;

@@ -3,7 +3,7 @@
  *      Change SSID and PASS for two sites
  */
 
-#if 0                  //  1 for University, 0 for Home
+#if 1                  //  1 for University, 0 for Home
 
 
 /*

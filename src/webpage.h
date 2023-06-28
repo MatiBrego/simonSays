@@ -16,6 +16,7 @@ char webpage[] PROGMEM = R"=====(
   
   <script>
     var Socket;
+
     function init() {
       Socket = new WebSocket('ws://' + window.location.hostname + ':81/');
       Socket.onmessage = function(event){
@@ -23,6 +24,7 @@ char webpage[] PROGMEM = R"=====(
         document.getElementById("score").innerHTML = "Score: " + event.data ;
       }
     }
+
     function sendBtnPressed(color){
       Socket.send(color);
     }
